@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../lib/AuthContext'
+import Receipt from '../components/Receipt'
 
 export default function RecordPayment() {
   const { session } = useAuth()
@@ -12,6 +13,7 @@ export default function RecordPayment() {
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
   const [receipt, setReceipt] = useState(null)
+  const [showReceipt, setShowReceipt] = useState(false)
 
   useEffect(() => {
     supabase.from('students').select('*, classes(name, section)').order('full_name').then(({ data }) => setStudents(data || []))
@@ -39,7 +41,14 @@ export default function RecordPayment() {
     }).select().single()
     setSaving(false)
     if (error) { setError(error.message); return }
-    setReceipt(data)
+    const feeHead = feeHeads.find(h => h.id === form.fee_head_id)
+    setReceipt({
+      ...data,
+      student_name: selectedStudent.full_name,
+      admission_no: selectedStudent.admission_no,
+      class_name: selectedStudent.classes ? `${selectedStudent.classes.name}${selectedStudent.classes.section ? ' - ' + selectedStudent.classes.section : ''}` : '',
+      fee_head_name: feeHead?.name || '',
+    })
     setForm({ fee_head_id: '', term: '', academic_year: form.academic_year, amount: '', payment_mode: 'cash', remarks: '' })
   }
 
@@ -86,8 +95,9 @@ export default function RecordPayment() {
           {receipt ? (
             <div className="alert success">
               Payment recorded — Receipt <span className="receipt-no">{receipt.receipt_no}</span> for ₹{Number(receipt.amount).toLocaleString('en-IN')}.
-              <div style={{ marginTop: 10 }}>
-                <button className="btn secondary" onClick={() => setReceipt(null)}>Record another payment for this student</button>
+              <div style={{ marginTop: 10, display: 'flex', gap: 8 }}>
+                <button className="btn" onClick={() => setShowReceipt(true)}>Print Receipt</button>
+                <button className="btn secondary" onClick={() => setReceipt(null)}>Record another payment</button>
               </div>
             </div>
           ) : (
@@ -136,6 +146,8 @@ export default function RecordPayment() {
           )}
         </div>
       )}
+
+      {showReceipt && <Receipt data={receipt} onClose={() => setShowReceipt(false)} />}
     </>
   )
-}
+}            
