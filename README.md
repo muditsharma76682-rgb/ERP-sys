@@ -1,4 +1,4 @@
-# Navyug Public School — Fee Management
+# Angel Public International School — Fee Management
 
 React + Vite frontend connected to your Supabase project (`ERP of school`).
 
