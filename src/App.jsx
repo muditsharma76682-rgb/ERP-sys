@@ -4,6 +4,7 @@ import Layout from './components/Layout'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Students from './pages/Students'
+import Staff from './pages/Staff'
 import FeeStructure from './pages/FeeStructure'
 import RecordPayment from './pages/RecordPayment'
 import Dues from './pages/Dues'
@@ -29,6 +30,7 @@ function AppRoutes() {
       <Route path="/" element={<Gate><Layout /></Gate>}>
         <Route index element={<Dashboard />} />
         <Route path="students" element={<RoleRoute allow={['admin', 'accountant', 'teacher']}><Students /></RoleRoute>} />
+        <Route path="staff" element={<RoleRoute allow={['admin', 'accountant', 'teacher']}><Staff /></RoleRoute>} />
         <Route path="fee-structure" element={<RoleRoute allow={['admin']}><FeeStructure /></RoleRoute>} />
         <Route path="record-payment" element={<RoleRoute allow={['admin', 'accountant']}><RecordPayment /></RoleRoute>} />
         <Route path="dues" element={<Dues />} />
