@@ -5,6 +5,7 @@ const NAV_BY_ROLE = {
   admin: [
     { to: '/', label: 'Overview', end: true },
     { to: '/students', label: 'Students' },
+    { to: '/staff', label: 'Staff & Teachers' },
     { to: '/fee-structure', label: 'Fee Structure' },
     { to: '/record-payment', label: 'Record Payment' },
     { to: '/dues', label: 'Dues Register' },
@@ -12,12 +13,14 @@ const NAV_BY_ROLE = {
   accountant: [
     { to: '/', label: 'Overview', end: true },
     { to: '/students', label: 'Students' },
+    { to: '/staff', label: 'Staff & Teachers' },
     { to: '/record-payment', label: 'Record Payment' },
     { to: '/dues', label: 'Dues Register' },
   ],
   teacher: [
     { to: '/', label: 'Overview', end: true },
     { to: '/students', label: 'Students' },
+    { to: '/staff', label: 'Staff & Teachers' },
     { to: '/dues', label: 'Dues Register' },
   ],
   parent: [
